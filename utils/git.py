@@ -15,3 +15,7 @@ def get_branch(name):
     if not out:
         raise CommandError(json.loads(err)[0]["message"])
     return out.strip()
+
+
+def release(name):
+    print "release %s" % name

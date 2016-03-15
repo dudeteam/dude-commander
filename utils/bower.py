@@ -28,6 +28,30 @@ def get_local(name):
         return json.load(bower_json)
 
 
+def increase_version(name):
+    """
+    Increase the version of this bower element.
+    :param name: the bower element's name
+    """
+    with open(os.path.join("..", name, "bower.json"), "w") as bower_json:
+        json_data = json.load(bower_json)
+        version = json_data["version"]
+        remainder = 1
+        digits = []
+        old_digits = version.split(".")
+        for i, digit in enumerate(reversed(old_digits)):
+            if remainder == 1:
+                if digit == "9" and i + 1 != len(old_digits):
+                    remainder = 1
+                    digit = "0"
+                else:
+                    remainder = 0
+                    digit = str(int(digit) + 1)
+            digits.insert(0, digit)
+        json_data["version"] = ".".join(digits)
+        json.dump(json_data, bower_json)
+
+
 def update_element(name, element_name):
     """
     Update the given element to its latest version.
