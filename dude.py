@@ -1,3 +1,5 @@
+#!/bin/env python
+
 import click
 import logging
 from errors import CommandError
